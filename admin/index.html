@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - The Strata</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="login-view" class="login-container">
+        <div class="login-box">
+            <h2><i class="fas fa-user-shield"></i> Admin Access</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" required placeholder="email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required placeholder="password">
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p id="login-error" class="error-msg"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-view" class="dashboard-container" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>The Strata</h3>
+                <span class="badge">Admin</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" onclick="switchTab('announcements')">
+                    <i class="fas fa-newspaper"></i> Announcements
+                </button>
+                <button class="nav-btn" onclick="switchTab('users')">
+                    <i class="fas fa-users"></i> User Management
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section id="tab-announcements" class="content-section active">
+                <div class="section-header">
+                    <h1>Manage Announcements</h1>
+                    <button class="btn-primary" onclick="openModal('add-announcement-modal')">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                </div>
+
+                <div class="card-grid" id="admin-announcements-list">
+                    <p>Loading...</p>
+                </div>
+            </section>
+
+            <section id="tab-users" class="content-section">
+                <div class="section-header">
+                    <h1>User Management</h1>
+                    </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Unit No.</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-list">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="add-announcement-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('add-announcement-modal')">&times;</span>
+            <h2>Create Announcement</h2>
+            <form id="create-announcement-form">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="ann-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="ann-desc" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="ann-type">
+                            <option value="event">Event (Orange)</option>
+                            <option value="tech">Tech (Green)</option>
+                            <option value="fee">Important (Red)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category Label</label>
+                        <input type="text" id="ann-category" placeholder="e.g. Community" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Meta Info (Date/Status)</label>
+                    <input type="text" id="ann-meta" placeholder="e.g. Jan 2025" required>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="ann-image" placeholder="https://..." required>
+                </div>
+                <button type="submit" class="btn-primary">Publish</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+    
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    </script>
+</body>
+</html>
